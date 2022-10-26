@@ -1,0 +1,94 @@
+.page-home {
+  background-image: url('../images/undraw_work_chat_erdt.svg');
+  background-repeat: no-repeat;
+  background-size: 115%;
+  @include media-breakpoint-up(xm) {
+    background-size: 500px;
+    background-position: 25px -150px;
+  }
+  @include media-breakpoint-up(sm) {
+    background-size: 90%;
+    background-position: 400px -150px;
+  }
+  @include media-breakpoint-up(md) {
+    background-size: 70%;
+    background-position: 200% -100px;
+  }
+  @include media-breakpoint-up(lg) {
+    background-size: 60%;
+    background-position: 120% -100px;
+  }
+  .call {
+    position: relative;
+    overflow: hidden;
+    background-color: #ffffff;
+    border-radius: 4px;
+    width: 100%;
+    color: $secondary;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 50px;
+    @include media-breakpoint-up(xm) {
+      box-shadow: none;
+    }
+    @include media-breakpoint-up(sm) {
+      flex-direction: row;
+      box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+      width: 90%;
+    }
+    @include media-breakpoint-up(md) {
+      width: 70%;
+    }
+    @include media-breakpoint-up(lg) {
+      width: 50%;
+    }
+    .call-box-top {
+      flex: 1 0 auto;
+      @include media-breakpoint-up(xm) {
+        padding-left: 0;
+      }
+      @include media-breakpoint-up(sm) {
+        padding: 20px;
+      }
+    }
+    .call-box-bottom {
+      flex: 0 0 auto;
+      padding: 20px;
+      align-items: center;
+      @include media-breakpoint-up(sm) {
+        padding: 20px;
+      }
+    }
+    .call-name {
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+    svg {
+      //       fill: lighten($primary, 30%);
+      fill: lighten($secondary, 40%);
+      position: absolute;
+      bottom: -9px;
+      right: 0;
+      width: 100px;
+      height: 100px;
+      @include media-breakpoint-up(sm) {
+        width: 120px;
+        height: 120px;
+      }
+    } // .call-box-bottom {
+    //   padding: 10px 20px;
+    //   border-bottom: 1px solid #CCC;
+    // }
+  }
+
+  h2 {
+    color: $primary;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    font-family: $font-family-heading;
+    @include media-breakpoint-up(md) {
+      font-size: 2rem;
+    }
+  }
+}

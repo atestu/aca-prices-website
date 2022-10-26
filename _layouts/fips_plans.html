@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>{{ page.fips }}</title>
+	{% include head.html %}
+</head>
+<body class="fips-plans">
+	{% include header.html %}
+	{% assign plans = site.data.fips_plans[page.year][page.plan_type][page.fips] %}
+	{% assign fips = site.data.fips[page.fips] %}
+	<div class="container">
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="/">USA</a></li>
+			<li class="breadcrumb-item"><a href="/{{ site.data['fips2zips'][page.fips]['state'] }}">{{ site.data['fips2zips'][page.fips]['state'] }}</a></li>
+			<li class="breadcrumb-item">{{ site.data['fips2zips'][page.fips]['county'] }} county</li>
+			<li class="breadcrumb-item text-primary dropdown" aria-current="page">
+				<span class="dropdown-toggle" data-dropdown="coverage_type_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					{{ page.plan_type }} coverage
+				</span>
+				<div class="dropdown-menu" id="coverage_type_dropdown">
+					<a class="dropdown-item" href="/{{ page.base_link }}/individual">👤 Individual coverage</a>
+					<a class="dropdown-item" href="/{{ page.base_link }}/couple">👥 Couple coverage</a>
+					<a class="dropdown-item" href="/{{ page.base_link }}/family">👨‍👩‍👧‍👦 Family coverage</a>
+				</div>
+			</li>
+		</ol>
+	</nav>
+	<!-- <div class="row"> -->
+
+	<div class="plans">
+	{% for plan in plans %}
+		<div class="plan card mt-5">
+			<div class="card-body">
+				<div class="issuer text-muted">{{ plan['issuer']['name'] }}</div>
+				<h5 class="name card-title">
+					<span title="{{ plan['metal_level'] }} plan">
+						{% if plan['metal_level'] == 'Bronze' %}
+							🥉
+						{% else %}
+							{% if plan['metal_level'] == 'Silver' %}
+								🥈
+							{% else %}
+								{% if plan['metal_level'] == 'Catastrophic' %}
+									💥
+								{% else %}
+									🥇
+								{% endif %}
+							{% endif %}
+						{% endif %}
+					</span>
+					{{ plan['name']}}
+				</h5>
+				<a href="{{ plan['benefits_url'] }}" class="card-link" target="_blank">Detailed Benefits & Coverage (PDF)</a>
+				<a href="{{ plan['brochure_url'] }}" class="card-link" target="_blank">Brochure (PDF)</a>
+				<a href="{{ plan['network_url'] }}" class="card-link" target="_blank">Network</a>
+			</div>
+			<div class="row card-body">
+				<div class="col-md-8">
+					<table class="table table-sm m-0">
+						<thead>
+							<tr>
+								<th>Select Benefits</th>
+								<th class="copay">In-Network</th>
+								<th class="copay">Out-of-Network</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for benefit in plan['benefits'] %}
+								<tr>
+									<th>
+										{% if benefit['covered'] %}
+										<!-- ✅ -->
+										{% else %}
+										<!-- 🚫 -->
+										{% endif %}
+										{{ benefit['name'] }}
+									</th>
+									{% assign in_network_cost_sharing = benefit['cost_sharings'] | where: "network_tier", "In-Network" %}
+									{% for cost_sharing in in_network_cost_sharing %}
+										<td class="copay">
+											<span title="{{ cost_sharing['display_string'] }}">
+											{% if cost_sharing['display_string'] == "No Charge" %}
+												✅
+											{% else %}
+												{% if cost_sharing['display_string'] == "No Charge After Deductible" %}
+													✅💸
+												{% else %}
+													{% if cost_sharing['display_string'] == "Not Covered" %}
+														🚫
+													{% else %}
+														{{ cost_sharing['display_string'] | replace: "after deductible", "💸" }}
+													{% endif %}
+												{% endif %}
+											{% endif %}
+											</span>
+										</td>
+									{% endfor %}
+									{% assign out_of_network_cost_sharing = benefit['cost_sharings'] | where: "network_tier", "Out-of-Network" %}
+									{% for cost_sharing in out_of_network_cost_sharing %}
+										<td class="copay">
+											<span title="{{ cost_sharing['display_string'] }}">
+											{% if cost_sharing['display_string'] == "No Charge After Deductible" or cost_sharing['display_string'] == "No Charge" %}
+												✅
+											{% else %}
+												{% if cost_sharing['display_string'] == "Not Covered" %}
+													🚫
+												{% else %}
+													{{ cost_sharing['display_string'] | replace: "after deductible", "💸" }}
+												{% endif %}
+											{% endif %}
+											</span>
+										</td>
+									{% endfor %}
+								</tr>
+							{% endfor %}
+							<tr>
+								<td>
+								</td>
+								<td colspan="2" class="copay">
+									<small class="text-muted">💸 = after deductible</small>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+				</div>
+				<div class="col-md-1"></div>
+				<div class="col-md-3">
+					<div class="premium-box">
+						<div class="premium-monthly">
+							<small class="text-muted">Monthly premium:</small>
+							<span class="number">${{ plan['premium'] | round }}</span>
+						</div>
+						<div class="premium-months">&times; 12 months</div>
+						<div class="premium">
+							<small class="text-muted">Annual premium:</small>
+							<span class="number red">${{ plan['premium'] | times: 12 | round }}</span>
+						</div>
+						<div class="premium-deductible">
+							<small class="text-muted">💸 deductible:</small>
+							+ <span class="number">${{ plan['deductibles'][0]['amount'] }}</span>
+						</div>
+						<div class="premium-total">
+							<small class="text-muted" title="What you would have to pay per year before your insurance starts to pay for covered services (not including potential copays / coinsurance, see benefits table)">Real annual cost:</small>
+							<span class="number">
+								${{ plan['premium'] | times: 12 | plus: plan['deductibles'][0]['amount'] | round }}
+							</span>
+							<br>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+	</div>
+
+	<!-- </div> -->
+	</div>
+</body>
+</html>

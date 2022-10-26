@@ -1,0 +1,45 @@
+body.fips-plans {
+	.plans {
+		.plan {
+			.label {
+				color: $gray-900;
+			}
+			.premium-box {
+				text-align: right;
+				.number {
+					font-size: 20px;
+					&.red {
+						color: $red;
+					}
+				}
+				.premium-months, .premium-deductible {
+					border-bottom: 1px solid $gray-900;
+					padding-bottom: 10px;
+					margin-bottom: 10px;
+				}
+				.premium-monthly {
+					.number {
+						padding: 3px 5px;
+						margin-right: -5px;
+						background-color: $red;
+						color: $white;
+					}
+				}
+			}
+			.table {
+				font-size: 13px;
+				th {
+					font-weight: normal;
+				}
+				thead {
+					th {
+						font-weight: bold;
+					}
+				}
+			}
+			.copay {
+				text-align: center;
+			}
+		}
+	}
+}

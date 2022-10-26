@@ -1,0 +1,125 @@
+h1, .h1 {
+	color: $primary;
+	font-size: 3rem;
+	line-height: 1.2;
+	font-family: $font-family-heading;
+	margin-top: 50px;
+}
+h2, .h2 {
+	color: $primary;
+	font-size: 2rem;
+	line-height: 1.2;
+	font-family: $font-family-heading;
+	.number {
+		display: block;
+		float: left;
+		background: $primary;
+		color: $white;
+		width: 38px;
+		border-radius: 38px;
+		text-align: center;
+		padding-bottom: 5px;
+		margin-top: -2px;
+		margin-right: 10px;
+	}
+}
+h3 {
+	color: $primary;
+	font-size: 1.75rem;
+	line-height: 1.2;
+	font-family: $font-family-heading;
+	.number {
+		display: block;
+		float: left;
+		background: $primary;
+		color: $white;
+		width: 38px;
+		border-radius: 38px;
+		text-align: center;
+		padding-bottom: 5px;
+		margin-top: -2px;
+		margin-right: 10px;
+	}
+}
+.highlighted {
+	background-image: radial-gradient(#ffff00bd, rgba(255, 255, 255, 0));
+	padding: 0px 8px 8px;
+	margin: 0 -8px -8px;
+}
+.primary {
+	color: $primary;
+}
+.banner {
+	.left {
+		text-align: right;
+		margin-right: 20px;
+		padding-top: 10px;
+	}
+	.right {
+		text-align: left;
+		margin-top: 15px;
+		padding: 20px;
+		border-left: 1px solid $secondary;
+	}
+	@include media-breakpoint-down(sm) {
+		.left, .right {
+			text-align: center;
+			border: none;
+			padding: 0;
+		}
+		.left {
+			margin-right: 0;
+		}
+		.right {
+			margin-top: 20px;
+		}
+	}
+}
+#sticky_footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background: white;
+	padding: 10px;
+	box-shadow: 0 -5px 10px #00000040;
+	z-index: $zindex-modal;
+	font-size: 16px;
+	#close_sticky_footer {
+		text-decoration: none;
+	}
+	p {
+		vertical-align: middle;
+		text-align: right;
+		margin: 5px 0;
+	}
+	input {
+		font-size: 13px;
+		height: 35px;
+		line-height: 1;
+	}
+	@include media-breakpoint-down(md) {
+		font-size: 13px;
+		text-align: center;
+		p {
+			text-align: center;
+			margin: 0 0 10px 0;
+		}
+		input {
+			font-size: 11px;
+		}
+	}
+	.call-box-top, .call-box-bottom {
+		display: inline-block;
+		font-size: 11px;
+	}
+}
+
+
+.center {
+	text-align: center;
+}
+
+b {
+	font-weight: bold;
+
+}

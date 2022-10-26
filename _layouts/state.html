@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>{{ page.state }}</title>
+	{% include head.html %}
+</head>
+<body class="state">
+	{% include header.html %}
+	<div class="container">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="/">USA</a></li>
+				<li class="breadcrumb-item active">{{ page.state }}</li>
+			</ol>
+		</nav>
+		<div class="state">
+			Counties:
+			<ul>
+			{% for county in page.counties %}
+				<li><a href="/{{ page.base_link }}/{{ county | slugify }}/individual">{{ county }}</a></li>
+			{% endfor %}
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
