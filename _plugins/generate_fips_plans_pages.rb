@@ -7,8 +7,14 @@ module Jekyll
 		def generate(site)
 			dir = site.config['fips_plans_dir'] || 'fips'
 			(2021..Date.today.next_month(2).year).to_a.map(&:to_s).each do |year|
+				# Skip years that don't have data
+				next unless site.data['fips_plans'] && site.data['fips_plans'][year]
+
 				['individual', 'couple', 'family'].each do |plan_type|
-					site.data['fips_plans'][year]['individual'].each_key do |fips|
+					# Skip if this plan type doesn't exist for this year
+					next unless site.data['fips_plans'][year][plan_type]
+
+					site.data['fips_plans'][year][plan_type].each_key do |fips|
 						site.pages << FipsPlanPage.new(site, site.source, year, plan_type, fips)
 					end
 				end
